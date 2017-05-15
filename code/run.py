@@ -3,12 +3,29 @@ from optparse import OptionParser
 import sys
 import os
 import utils.etl_driver as etl_driver
+from configs.spark_config import SparkConfig
+from configs.io_config import IOConfig
+
 
 class PysparkDriver(etl_driver.ETLdriver):
+
     def __init__(self, config_file):
-        super().__init__(self, config_file)
-        print(config_file)
-        self.log.info('log statement of pysparkdriver')
+
+        super().__init__(config_file)
+
+        self.spark_conf, self.io_conf = self._setup_contexts()
+
+        #self.log.info('log statement of pysparkdriver')
+
+    def _setup_contexts(self):
+
+        spark_conf = SparkConfig()
+        spark_conf.build_from_json(self.json_config)
+
+        io_conf = IOConfig()
+        io_conf.build_from_json(self.json_config)
+
+        return spark_conf, io_conf
 
 def parse_commandline_args():
     opt = OptionParser()
@@ -17,10 +34,8 @@ def parse_commandline_args():
 
 if __name__ == '__main__':
     options, args = parse_commandline_args()
-    '''if options.config:
+    print('Options:', options)
+    print('Args:', args)
+    if options.config:
         driver = PysparkDriver(options.config)
-        driver.run()
-    '''
-    print(options)
-    print(args)
-
+        print(driver)
