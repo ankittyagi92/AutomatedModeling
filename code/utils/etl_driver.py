@@ -3,7 +3,7 @@ import json
 import logging
 import utils.logs_driver as logs_driver
 
-from configs.base_config import BaseConfig
+import configs.base_config as base_config
 
 
 class ETLdriver(object):
@@ -11,16 +11,18 @@ class ETLdriver(object):
         #self.log.info('log statement of etl_driver')
 
         self._load_json(config_file)
-        #self._build_config()
+        self._build_config()
 
     def _load_json(self, config_file):
+        print("Reading config file")
         self.config_file = config_file
 
         with open(config_file, 'r') as infile:
             self.json_config = json.load(infile)
 
-    '''def _build_config(self):
-        return BaseConfig().build_from_json(self.json_config)'''
+    def _build_config(self):
+        print("Setting attributes from json_conifg")
+        return base_config.BaseConfig().build_from_json(self.json_config)
 
 
     def _setup_log(self,json_config):

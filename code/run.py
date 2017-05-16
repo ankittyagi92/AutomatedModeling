@@ -18,7 +18,7 @@ class PysparkDriver(etl_driver.ETLdriver):
         #self.log.info('log statement of pysparkdriver')
 
     def _setup_contexts(self):
-
+        print("Setting up spark_conf and io_conf")
         spark_conf = SparkConfig()
         spark_conf.build_from_json(self.json_config)
 
@@ -38,4 +38,9 @@ if __name__ == '__main__':
     print('Args:', args)
     if options.config:
         driver = PysparkDriver(options.config)
-        print(driver)
+        attr = vars(driver)
+        for item in attr.items():
+            print(item)
+            print ("\n")
+        print(driver.io_conf.loglevel)
+

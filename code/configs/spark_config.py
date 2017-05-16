@@ -5,5 +5,5 @@ class SparkConfig(BaseConfig):
         super().__init__()
 
         self.executor_memory = '2g'
-        self.dynamicAllocation_enabled = True
+        self.dynamicAllocation_enabled = False
         self.config_outname = 'SparkConfig'
