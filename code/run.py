@@ -49,8 +49,5 @@ if __name__ == '__main__':
     if options.config:
         driver = PysparkDriver(options.config)
         attr = vars(driver)
-        for item in attr.items():
-            print(item)
-            print ("\n")
-        print(driver.log.name)
+        driver.run()
 

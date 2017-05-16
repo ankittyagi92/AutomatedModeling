@@ -2,3 +2,5 @@ INFO:run_automated_modeling.log:Log statement of etl_driver
 INFO:run_automated_modeling.log:Setting up spark_conf, io_conf
 INFO:run_automated_modeling.log:All confs set
 INFO:run_automated_modeling.log:Log statement of pysparkdriver
+INFO:run_automated_modeling.log:Running the framework
+INFO:run_automated_modeling.log:Running complete without problems

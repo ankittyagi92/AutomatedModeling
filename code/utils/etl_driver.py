@@ -1,5 +1,6 @@
 import os
 import json
+import traceback
 import logging
 import utils.logs_driver as logs_driver
 
@@ -32,3 +33,17 @@ class ETLdriver(object):
 
         return logs_driver.get_log(self)
 
+    def run(self):
+        try:
+            self.run_framework()
+        except Exception as ex:
+            self.log.info('Error encountered: %s' %str(ex))
+            self.log.info(str(traceback.format_exc()))
+            self.log.info("\n")
+
+    def run_framework(self):
+        self.log.info('Running the framework')
+        #frame, header = self.load_data()
+        #header.show()
+        #frame.show(2)
+        self.log.info('Running complete without problems')
