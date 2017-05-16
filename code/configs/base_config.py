@@ -2,8 +2,9 @@ class BaseConfig(object):
 
     def __init__(self):
 
-        self.app_name = ''
-        self.logname = ''
+        self.app_name = 'AutomatedModeling'
+        self.log_name = ''
+        self.loglevel = 'ERROR'
         self.config_outname = 'BaseConfig'
 
     def build_from_json(self,json_config):

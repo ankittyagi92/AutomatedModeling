@@ -1,14 +1,13 @@
 {
   "BaseConfig":{
-    "app_name": "automated_modeling"
+    "app_name": "automated_modeling",
+    "loglevel": "INFO"
   },
   "SparkConfig": {
     "executor_memory": "2g",
     "dynamicAllocation_enabled": true
   },
   "PysparkConfig":{},
-  "IOConfig":{
-    "loglevel": "INFO"
-  },
+  "IOConfig":{},
   "VaribleConfig":{}
 }

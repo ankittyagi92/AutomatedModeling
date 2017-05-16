@@ -5,6 +5,7 @@ import os
 import utils.etl_driver as etl_driver
 from configs.spark_config import SparkConfig
 from configs.io_config import IOConfig
+from configs.base_config import BaseConfig
 
 
 class PysparkDriver(etl_driver.ETLdriver):
@@ -15,32 +16,41 @@ class PysparkDriver(etl_driver.ETLdriver):
 
         self.spark_conf, self.io_conf = self._setup_contexts()
 
-        #self.log.info('log statement of pysparkdriver')
+        self.log.info('Log statement of pysparkdriver')
 
     def _setup_contexts(self):
-        print("Setting up spark_conf and io_conf")
+
+        self.log.info("Setting up spark_conf, io_conf")
+
         spark_conf = SparkConfig()
         spark_conf.build_from_json(self.json_config)
 
         io_conf = IOConfig()
         io_conf.build_from_json(self.json_config)
 
-        return spark_conf, io_conf
+        self.log.info("All confs set")
+        return  spark_conf, io_conf
 
 def parse_commandline_args():
+
     opt = OptionParser()
     opt.add_option('-c', '--config', dest = 'config', help = 'path to the config file to be used')
     return opt.parse_args()
 
 if __name__ == '__main__':
+
     options, args = parse_commandline_args()
+
+    print("<<<<<<<<<<<<<<<<<Starting the framework>>>>>>>>>>>>")
+    print("<<<<With the following command line parameters>>>>>")
     print('Options:', options)
     print('Args:', args)
+
     if options.config:
         driver = PysparkDriver(options.config)
         attr = vars(driver)
         for item in attr.items():
             print(item)
             print ("\n")
-        print(driver.io_conf.loglevel)
+        print(driver.log.name)
 
