@@ -1,13 +1,26 @@
 {
   "BaseConfig":{
-    "app_name": "automated_modeling",
-    "loglevel": "INFO"
   },
   "SparkConfig": {
     "executor_memory": "2g",
     "dynamicAllocation_enabled": true
   },
-  "PysparkConfig":{},
-  "IOConfig":{},
+  "GeneralConfig":{
+    "app_name": "automated_modeling",
+    "loglevel": "INFO",
+    "mode": [
+      "add_variables"
+    ],
+    "variable_addition_dict":{
+      "code.transforms.transform_1": "add_null_column",
+      "code.transforms.transform_2": "add_random_column"
+    },
+    "save_frame": false
+  },
+  "IOConfig":{
+    "input_dir": "C:/Users/ankit_lr03y9t/Documents/Kaggle/Titanic/",
+    "input_file": "train.csv",
+    "parquet": false
+  },
   "VaribleConfig":{}
 }

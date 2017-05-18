@@ -12,23 +12,24 @@ def get_log(self):
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir)
 
-    if self.base_conf.log_name == '':
-        log_name = 'run_' + self.base_conf.app_name + '.log'
+    if self.general_conf.log_name == '':
+        log_name = 'run_' + self.general_conf.app_name + '.log'
     else:
-        log_name = self.base_conf.log_name + '.log'
+        log_name = self.general_conf.log_name + '.log'
 
-    logging.basicConfig(filename= log_dir + log_name,
-                        filemode='w')
+    logging.basicConfig(filename = log_dir + log_name,
+                        filemode ='w',
+                        format = '%(asctime)s %(message)s')
 
     log_obj = logging.getLogger(log_name)
 
-    if self.base_conf.loglevel == 'INFO':
+    if self.general_conf.loglevel == 'INFO':
         log_obj.setLevel(logging.INFO)
-    elif self.base_conf.loglevel == 'DEBUG':
+    elif self.general_conf.loglevel == 'DEBUG':
         log_obj.setLevel(logging.DEBUG)
-    elif self.base_conf.loglevel == 'ERROR':
+    elif self.general_conf.loglevel == 'ERROR':
         log_obj.setLevel(logging.ERROR)
-    elif self.base_conf.loglevel == 'WARNING':
+    elif self.general_conf.loglevel == 'WARNING':
         log_obj.setLevel(logging.WARNING)
 
     return log_obj

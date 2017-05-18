@@ -5,7 +5,6 @@ import os
 import utils.etl_driver as etl_driver
 from configs.spark_config import SparkConfig
 from configs.io_config import IOConfig
-from configs.base_config import BaseConfig
 
 
 class PysparkDriver(etl_driver.ETLdriver):

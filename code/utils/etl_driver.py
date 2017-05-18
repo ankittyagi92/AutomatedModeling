@@ -1,10 +1,12 @@
 import os
 import json
+import pandas as pd
 import traceback
 import logging
 import utils.logs_driver as logs_driver
 
-import configs.base_config as base_config
+import configs.general_config as general_config
+import configs.io_config as io_config
 
 
 class ETLdriver(object):
@@ -13,7 +15,7 @@ class ETLdriver(object):
         self._load_json(config_file)
 
         #base conf needs to be setup before other confs
-        self.base_conf = self._build_config()
+        self.general_conf = self._build_config()
         self.log = self._setup_log()
         self.log.info('Log statement of etl_driver')
 
@@ -27,7 +29,7 @@ class ETLdriver(object):
     def _build_config(self):
 
         #self.log.info("Setting attributes from json_conifg")
-        return base_config.BaseConfig().build_from_json(self.json_config)
+        return general_config.GeneralConfig().build_from_json(self.json_config)
 
     def _setup_log(self):
 
@@ -43,7 +45,46 @@ class ETLdriver(object):
 
     def run_framework(self):
         self.log.info('Running the framework')
-        #frame, header = self.load_data()
-        #header.show()
-        #frame.show(2)
+        self.log.info("Reading Data")
+        frame, header = self._load_data()
+        self.log.info("Data read, running transforms")
+        for mode in self.general_conf.mode:
+            print("Mode: ", mode)
+            frame = self.call_mode(frame, mode)
+        self.log.info("Transforms complete")
+        if self.general_conf.save_frame:
+            self.save_transformed_frame(frame)
+        print(frame)
+        print(header)
         self.log.info('Running complete without problems')
+
+    def _load_data(self):
+        io_conf = io_config.IOConfig().build_from_json(self.json_config)
+        extension = os.path.splitext(io_conf.input_file)[1]
+
+        if extension == '.csv':
+            #df = spark.read.csv(io_conf.input_dir + io_conf.input_file)
+            #head = colnames(df)
+            df = pd.read_csv(io_conf.input_dir + io_conf.input_file)
+            head = list(df)
+            return df, head
+        else:
+            print("Currently only local csv enabled")
+            return None, None
+
+    def call_mode(self, frame, mode):
+        self.log.info("Starting mode: %s" % mode )
+        if hasattr(self, mode):
+            frame = getattr(self,mode)(frame)
+        else:
+            self.log.info("Unable to identify mode %s" %mode)
+            raise AttributeError(mode)
+        return frame
+
+    def add_variables(self,frame):
+        for module_name, transform_func in self.general_conf.variable_addition_dict.items():
+            print(module_name, transform_func)
+        return frame
+
+    def save_transformed_frame(self, frame):
+        pass

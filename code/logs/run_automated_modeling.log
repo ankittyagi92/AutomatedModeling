@@ -1,6 +1,10 @@
-INFO:run_automated_modeling.log:Log statement of etl_driver
-INFO:run_automated_modeling.log:Setting up spark_conf, io_conf
-INFO:run_automated_modeling.log:All confs set
-INFO:run_automated_modeling.log:Log statement of pysparkdriver
-INFO:run_automated_modeling.log:Running the framework
-INFO:run_automated_modeling.log:Running complete without problems
+2017-05-19 01:48:55,110 Log statement of etl_driver
+2017-05-19 01:48:55,110 Setting up spark_conf, io_conf
+2017-05-19 01:48:55,110 All confs set
+2017-05-19 01:48:55,110 Log statement of pysparkdriver
+2017-05-19 01:48:55,111 Running the framework
+2017-05-19 01:48:55,111 Reading Data
+2017-05-19 01:48:55,117 Data read, running transforms
+2017-05-19 01:48:55,117 Starting mode: add_variables
+2017-05-19 01:48:55,118 Transforms complete
+2017-05-19 01:48:55,158 Running complete without problems
