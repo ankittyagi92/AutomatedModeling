@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import traceback
 import logging
+import importlib
 import utils.logs_driver as logs_driver
 
 import configs.general_config as general_config
@@ -84,6 +85,9 @@ class ETLdriver(object):
     def add_variables(self,frame):
         for module_name, transform_func in self.general_conf.variable_addition_dict.items():
             print(module_name, transform_func)
+            mod = importlib.import_module(module_name)
+            if hasattr(mod, transform_func):
+                frame = getattr(mod, transform_func)(self,frame)
         return frame
 
     def save_transformed_frame(self, frame):
