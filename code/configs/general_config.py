@@ -11,6 +11,5 @@ class GeneralConfig(BaseConfig):
         self.mode = {}
         self.joins = {}
         self.variable_addition_dict = {}
-        self.save_frame = False
 
         self.config_outname = 'GeneralConfig'

@@ -2,10 +2,6 @@ import os
 import logging
 
 def get_log(self):
-    '''dynamically implement this later
-    '''
-    #return os.getcwd() + "/logs"
-
 
     log_dir = os.getcwd() + "/logs/"
     print(log_dir)

@@ -1,12 +1,14 @@
-2017-05-20 18:46:44,072 Log statement of etl_driver
-2017-05-20 18:46:44,072 Setting up spark_conf, io_conf
-2017-05-20 18:46:44,072 All confs set
-2017-05-20 18:46:44,072 Log statement of pysparkdriver
-2017-05-20 18:46:44,072 Running the framework
-2017-05-20 18:46:44,072 Reading Data
-2017-05-20 18:46:44,088 Data read, running transforms
-2017-05-20 18:46:44,088 Starting mode: add_variables
-2017-05-20 18:46:44,088 Running add_null_column
-2017-05-20 18:46:44,103 Running add_random_column
-2017-05-20 18:46:44,103 Transforms complete
-2017-05-20 18:46:44,150 Running complete without problems
+2017-05-21 23:00:17,422 Log statement of etl_driver
+2017-05-21 23:00:17,422 Setting up spark_conf, io_conf
+2017-05-21 23:00:17,422 All confs set
+2017-05-21 23:00:17,422 Log statement of pysparkdriver
+2017-05-21 23:00:17,422 Running the framework
+2017-05-21 23:00:17,422 Reading Data
+2017-05-21 23:00:17,531 Data read, running transforms
+2017-05-21 23:00:17,531 Starting mode: add_variables
+2017-05-21 23:00:17,578 Running add_null_column
+2017-05-21 23:00:17,578 Running add_random_column
+2017-05-21 23:00:17,578 Transforms complete
+2017-05-21 23:00:17,578 Writing frame as csv to path : C:/Users/ankit_lr03y9t/Documents/Kaggle/Titanic/
+2017-05-21 23:00:17,625 File write done
+2017-05-21 23:00:17,718 Running complete without problems

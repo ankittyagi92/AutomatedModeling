@@ -15,8 +15,9 @@ class ETLdriver(object):
 
         self._load_json(config_file)
 
-        #base conf needs to be setup before other confs
-        self.general_conf = self._build_config()
+        #settting up confs
+        self.io_conf = io_config.IOConfig().build_from_json(self.json_config)
+        self.general_conf = general_config.GeneralConfig().build_from_json(self.json_config)
         self.log = self._setup_log()
         self.log.info('Log statement of etl_driver')
 
@@ -26,11 +27,6 @@ class ETLdriver(object):
 
         with open(config_file, 'r') as infile:
             self.json_config = json.load(infile)
-
-    def _build_config(self):
-
-        #self.log.info("Setting attributes from json_conifg")
-        return general_config.GeneralConfig().build_from_json(self.json_config)
 
     def _setup_log(self):
 
@@ -53,20 +49,20 @@ class ETLdriver(object):
             print("Mode: ", mode)
             frame = self.call_mode(frame, mode)
         self.log.info("Transforms complete")
-        if self.general_conf.save_frame:
+        if self.io_conf.save_frame:
             self.save_transformed_frame(frame)
         print(frame)
         print(header)
         self.log.info('Running complete without problems')
 
     def _load_data(self):
-        io_conf = io_config.IOConfig().build_from_json(self.json_config)
-        extension = os.path.splitext(io_conf.input_file)[1]
+
+        extension = os.path.splitext(self.io_conf.input_file)[1]
 
         if extension == '.csv':
             #df = spark.read.csv(io_conf.input_dir + io_conf.input_file)
             #head = colnames(df)
-            df = pd.read_csv(io_conf.input_dir + io_conf.input_file)
+            df = pd.read_csv(self.io_conf.input_dir + self.io_conf.input_file)
             head = list(df)
             return df, head
         else:
@@ -91,4 +87,12 @@ class ETLdriver(object):
         return frame
 
     def save_transformed_frame(self, frame):
-        pass
+
+        output_path = self.io_conf.output_dir
+        self.log.info('Writing frame as csv to path : %s' %output_path)
+        if not os.path.isdir(output_path):
+            os.makedirs(output_path)
+        output_name = self.io_conf.output_file
+        frame.to_csv(output_path + output_name)
+        self.log.info('File write done')
+        return
