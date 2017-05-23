@@ -1,8 +1,5 @@
-import numpy as np
-import pandas as pd
+import random
 
-def add_random_column(self, frame):
-    self.log.info('Running add_random_column')
-    sLength = frame.count()
-    frame = frame.withColumn('random_column', pd.Series(np.random.randn(sLength)))
-    return frame
+def add_random_column(row_dict):
+    row_dict['random_column'] = random.randint(1,100)
+    return row_dict

@@ -9,5 +9,6 @@ class IOConfig(BaseConfig):
         self.save_frame = True
         self.output_dir = ''
         self.output_file = ''
+        self.sampling_ratio = None
         self.log_name = ''
         self.config_outname = 'IOConfig'

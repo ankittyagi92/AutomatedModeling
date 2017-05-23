@@ -11,7 +11,6 @@ import configs.general_config as general_config
 import configs.io_config as io_config
 import configs.spark_config as spark_config
 
-from pyspark import SparkContext
 from pyspark.sql import SparkSession
 
 
@@ -100,7 +99,12 @@ class ETLdriver(object):
             print(module_name, transform_func)
             mod = importlib.import_module(module_name)
             if hasattr(mod, transform_func):
-                frame = getattr(mod, transform_func)(self,frame)
+                add_frame_rows = frame.map(getattr(mod, transform_func))
+            if self.io_conf.sampling_ratio:
+                frame = self.spark.createDataFrame(add_frame_rows,
+                                                   samplingRatio = self.io_conf.sampling_ratio)
+            else:
+                frame = self.spark.createDataFrame(add_frame_rows)
         return frame
 
     def save_transformed_frame(self, frame):
