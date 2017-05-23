@@ -13,23 +13,6 @@ class PysparkDriver(etl_driver.ETLdriver):
 
         super().__init__(config_file)
 
-        self.spark_conf, self.io_conf = self._setup_contexts()
-
-        self.log.info('Log statement of pysparkdriver')
-
-    def _setup_contexts(self):
-
-        self.log.info("Setting up spark_conf, io_conf")
-
-        spark_conf = SparkConfig()
-        spark_conf.build_from_json(self.json_config)
-
-        io_conf = IOConfig()
-        io_conf.build_from_json(self.json_config)
-
-        self.log.info("All confs set")
-        return  spark_conf, io_conf
-
 def parse_commandline_args():
 
     opt = OptionParser()

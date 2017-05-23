@@ -1,14 +1,17 @@
-2017-05-21 23:00:17,422 Log statement of etl_driver
-2017-05-21 23:00:17,422 Setting up spark_conf, io_conf
-2017-05-21 23:00:17,422 All confs set
-2017-05-21 23:00:17,422 Log statement of pysparkdriver
-2017-05-21 23:00:17,422 Running the framework
-2017-05-21 23:00:17,422 Reading Data
-2017-05-21 23:00:17,531 Data read, running transforms
-2017-05-21 23:00:17,531 Starting mode: add_variables
-2017-05-21 23:00:17,578 Running add_null_column
-2017-05-21 23:00:17,578 Running add_random_column
-2017-05-21 23:00:17,578 Transforms complete
-2017-05-21 23:00:17,578 Writing frame as csv to path : C:/Users/ankit_lr03y9t/Documents/Kaggle/Titanic/
-2017-05-21 23:00:17,625 File write done
-2017-05-21 23:00:17,718 Running complete without problems
+2017-05-23 21:43:31,038 Setting up spark context
+2017-05-23 21:43:31,038 Setting spark config param: spark.dynamicAllocation.executoIdleTimeout to 240
+2017-05-23 21:43:31,038 Setting spark config param: spark.dynamicAllocation.enabled to True
+2017-05-23 21:43:31,038 Setting spark config param: spark.dynamicAllocation.maxExecutors to 10
+2017-05-23 21:43:31,039 Setting spark config param: spark.config_outname to SparkConfig
+2017-05-23 21:43:31,039 Setting spark config param: spark.dynamicAllocation.minExecutors to 2
+2017-05-23 21:43:31,039 Setting spark config param: spark.dynamicAllocation.initialExecutors to 2
+2017-05-23 21:43:31,039 Setting spark config param: spark.executor_memory to 2g
+2017-05-23 21:43:33,772 SparkSession created
+2017-05-23 21:43:33,772 Log statement of etl_driver
+2017-05-23 21:43:33,772 Running the framework
+2017-05-23 21:43:33,772 Reading Data
+2017-05-23 21:43:37,851 Data read, running transforms
+2017-05-23 21:43:37,851 Transforms complete
+2017-05-23 21:43:37,851 Writing frame as csv to path : /home/fractaluser/Documents/Litigation_Data/Output/
+2017-05-23 21:43:44,700 File write done
+2017-05-23 21:43:44,701 Running complete without problems

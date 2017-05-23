@@ -5,9 +5,14 @@ import traceback
 import logging
 import importlib
 import utils.logs_driver as logs_driver
+import utils.config_builder as config_builder
 
 import configs.general_config as general_config
 import configs.io_config as io_config
+import configs.spark_config as spark_config
+
+from pyspark import SparkContext
+from pyspark.sql import SparkSession
 
 
 class ETLdriver(object):
@@ -18,7 +23,9 @@ class ETLdriver(object):
         #settting up confs
         self.io_conf = io_config.IOConfig().build_from_json(self.json_config)
         self.general_conf = general_config.GeneralConfig().build_from_json(self.json_config)
+        self.spark_conf = spark_config.SparkConfig().build_from_json(self.json_config)
         self.log = self._setup_log()
+        self.spark = self._setup_contexts()
         self.log.info('Log statement of etl_driver')
 
     def _load_json(self, config_file):
@@ -31,6 +38,18 @@ class ETLdriver(object):
     def _setup_log(self):
 
         return logs_driver.get_log(self)
+
+    def _setup_contexts(self):
+
+        self.log.info("Setting up spark context")
+
+        conf = config_builder.build_spark_config(self.spark_conf, self.log)
+
+        spark = SparkSession.builder.appName(self.general_conf.app_name)\
+                                    .config(conf = conf).getOrCreate()
+        self.log.info("SparkSession created")
+
+        return spark
 
     def run(self):
         try:
@@ -51,8 +70,7 @@ class ETLdriver(object):
         self.log.info("Transforms complete")
         if self.io_conf.save_frame:
             self.save_transformed_frame(frame)
-        print(frame)
-        print(header)
+
         self.log.info('Running complete without problems')
 
     def _load_data(self):
@@ -60,14 +78,13 @@ class ETLdriver(object):
         extension = os.path.splitext(self.io_conf.input_file)[1]
 
         if extension == '.csv':
-            #df = spark.read.csv(io_conf.input_dir + io_conf.input_file)
-            #head = colnames(df)
-            df = pd.read_csv(self.io_conf.input_dir + self.io_conf.input_file)
+            df = self.spark.read.csv(self.io_conf.input_dir + self.io_conf.input_file)
             head = list(df)
             return df, head
-        else:
-            print("Currently only local csv enabled")
-            return None, None
+        elif(extension == '.parquet'):
+            df = self.spark.read.load(self.io_conf.input_dir + self.io_conf.input_file)
+            head = df.columns
+            return df, head
 
     def call_mode(self, frame, mode):
         self.log.info("Starting mode: %s" % mode )
@@ -93,6 +110,6 @@ class ETLdriver(object):
         if not os.path.isdir(output_path):
             os.makedirs(output_path)
         output_name = self.io_conf.output_file
-        frame.to_csv(output_path + output_name)
+        frame.write.csv(output_path + output_name)
         self.log.info('File write done')
         return
