@@ -1,0 +1,33 @@
+{
+  "BaseConfig":{
+  },
+  "SparkConfig": {
+    "executor_memory": "2g",
+    "dynamicAllocation_enabled": true,
+    "dynamicAllocation_initialExecutors": 2,
+    "dynamicAllocation_executoIdleTimeout": 240,
+    "dynamicAllocation_minExecutors": 2,
+    "dynamicAllocation_maxExecutors": 10,
+    "executor_instances": 2
+  },
+  "GeneralConfig":{
+    "app_name": "automated_modeling",
+    "loglevel": "INFO",
+    "mode": [
+    ],
+    "variable_addition_dict":{
+      "transforms.transform_1": "add_null_column",
+      "transforms.transform_2": "add_random_column"
+    }
+  },
+  "IOConfig":{
+    "input_dir": "/home/fractaluser/Documents/Litigation_Data/",
+    "input_file": "Litigation study_Model data.csv",
+    "parquet": false,
+    "save_frame": true,
+    "output_dir": "/home/fractaluser/Documents/Litigation_Data/Output/",
+    "output_file": "Litigation_prep.csv",
+    "sampling_ratio": 0.01
+  },
+  "VaribleConfig":{}
+}

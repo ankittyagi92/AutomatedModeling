@@ -1,7 +1,16 @@
-2017-05-24 01:39:18,066 Setting up spark context
-2017-05-24 01:39:18,066 Setting spark config param: spark.dynamicAllocation.executoIdleTimeout to 120
-2017-05-24 01:39:18,066 Setting spark config param: spark.dynamicAllocation.enabled to True
-2017-05-24 01:39:18,066 Setting spark config param: spark.dynamicAllocation.minExecutors to 2
-2017-05-24 01:39:18,067 Setting spark config param: spark.dynamicAllocation.maxExecutors to 10
-2017-05-24 01:39:18,067 Setting spark config param: spark.dynamicAllocation.initialExecutors to 2
-2017-05-24 01:39:18,067 Setting spark config param: spark.executor.memory to 2g
+2017-05-24 12:57:28,099 Setting up spark context
+2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.executoIdleTimeout to 240
+2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.enabled to True
+2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.minExecutors to 2
+2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.maxExecutors to 10
+2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.initialExecutors to 2
+2017-05-24 12:57:28,100 Setting spark config param: spark.executor.memory to 2g
+2017-05-24 12:57:33,636 SparkSession created
+2017-05-24 12:57:33,636 Log statement of etl_driver
+2017-05-24 12:57:33,636 Running the framework
+2017-05-24 12:57:33,636 Reading Data
+2017-05-24 12:57:40,154 Data read, running transforms
+2017-05-24 12:57:40,154 Transforms complete
+2017-05-24 12:57:40,154 Writing frame as csv to path : /home/fractaluser/Documents/Litigation_Data/Output/
+2017-05-24 12:57:50,064 File write done
+2017-05-24 12:57:50,065 Running complete without problems

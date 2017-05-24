@@ -114,6 +114,6 @@ class ETLdriver(object):
         if not os.path.isdir(output_path):
             os.makedirs(output_path)
         output_name = self.io_conf.output_file
-        frame.write.csv(output_path + output_name)
+        frame.write.csv(output_path + output_name, mode = 'overwrite')
         self.log.info('File write done')
         return
