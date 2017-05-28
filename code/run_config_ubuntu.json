@@ -8,15 +8,17 @@
     "dynamicAllocation_executoIdleTimeout": 240,
     "dynamicAllocation_minExecutors": 2,
     "dynamicAllocation_maxExecutors": 10,
-    "executor_instances": 2
+    "executor_instances": 2,
+    "executor_env": {}
   },
   "GeneralConfig":{
     "app_name": "automated_modeling",
     "loglevel": "INFO",
     "mode": [
+      "add_variables"
     ],
     "variable_addition_dict":{
-      "transforms.transform_1": "add_null_column",
+      "transforms.transform_1": "call_funcs",
       "transforms.transform_2": "add_random_column"
     }
   },
@@ -29,5 +31,7 @@
     "output_file": "Litigation_prep.csv",
     "sampling_ratio": 0.01
   },
-  "VaribleConfig":{}
+  "VariableConfig":{
+    "variable_file": "variables.json"
+  }
 }

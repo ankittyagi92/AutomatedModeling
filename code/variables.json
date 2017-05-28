@@ -1,0 +1,10 @@
+{
+  "VariableMapping": {
+    "policy_coverage": "POLICY_COVERAGE",
+    "reserve_id": "RESERVE_ID"
+  },
+  "VariableGroups": {
+    "policy_reserve": ["policy_coverage", "reserve_id"]
+  }
+
+}

@@ -11,4 +11,5 @@ class SparkConfig(BaseConfig):
         self.dynamicAllocation_minExecutors = 2
         self.dynamicAllocation_maxExecutors = 10
         self.executor_instances = 2
+        self.executor_env = {}
         self.config_outname = 'SparkConfig'

@@ -6,10 +6,13 @@ import logging
 import importlib
 import utils.logs_driver as logs_driver
 import utils.config_builder as config_builder
+import utils.filepath as filepath
+import utils.var_builder as var_build
 
 import configs.general_config as general_config
 import configs.io_config as io_config
 import configs.spark_config as spark_config
+import configs.variable_config as var_config
 
 from pyspark.sql import SparkSession
 
@@ -23,6 +26,7 @@ class ETLdriver(object):
         self.io_conf = io_config.IOConfig().build_from_json(self.json_config)
         self.general_conf = general_config.GeneralConfig().build_from_json(self.json_config)
         self.spark_conf = spark_config.SparkConfig().build_from_json(self.json_config)
+        self.var_conf = var_config.VariableConfig().build_from_json(self.json_config)
         self.log = self._setup_log()
         self.spark = self._setup_contexts()
         self.log.info('Log statement of etl_driver')
@@ -42,10 +46,12 @@ class ETLdriver(object):
 
         self.log.info("Setting up spark context")
 
-        conf = config_builder.build_spark_config(self.spark_conf, self.log)
+
+        conf = config_builder.build_spark_config(self.spark_conf, self.var_conf, self.log)
 
         spark = SparkSession.builder.appName(self.general_conf.app_name)\
                                     .config(conf = conf).getOrCreate()
+
         self.log.info("SparkSession created")
 
         return spark
@@ -69,7 +75,7 @@ class ETLdriver(object):
         self.log.info("Transforms complete")
         if self.io_conf.save_frame:
             self.save_transformed_frame(frame)
-
+        frame.show(2)
         self.log.info('Running complete without problems')
 
     def _load_data(self):
@@ -86,6 +92,7 @@ class ETLdriver(object):
             return df, head
 
     def call_mode(self, frame, mode):
+
         self.log.info("Starting mode: %s" % mode )
         if hasattr(self, mode):
             frame = getattr(self,mode)(frame)
@@ -95,11 +102,14 @@ class ETLdriver(object):
         return frame
 
     def add_variables(self,frame):
+
         for module_name, transform_func in self.general_conf.variable_addition_dict.items():
-            print(module_name, transform_func)
+
+            self.log.info("Module name: %s, Transformation Function: %s" % (module_name, transform_func))
+
             mod = importlib.import_module(module_name)
             if hasattr(mod, transform_func):
-                add_frame_rows = frame.map(getattr(mod, transform_func))
+                add_frame_rows = frame.rdd.map(getattr(mod, transform_func))
             if self.io_conf.sampling_ratio:
                 frame = self.spark.createDataFrame(add_frame_rows,
                                                    samplingRatio = self.io_conf.sampling_ratio)

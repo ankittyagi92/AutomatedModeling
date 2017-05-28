@@ -1,16 +1,255 @@
-2017-05-24 12:57:28,099 Setting up spark context
-2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.executoIdleTimeout to 240
-2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.enabled to True
-2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.minExecutors to 2
-2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.maxExecutors to 10
-2017-05-24 12:57:28,100 Setting spark config param: spark.dynamicAllocation.initialExecutors to 2
-2017-05-24 12:57:28,100 Setting spark config param: spark.executor.memory to 2g
-2017-05-24 12:57:33,636 SparkSession created
-2017-05-24 12:57:33,636 Log statement of etl_driver
-2017-05-24 12:57:33,636 Running the framework
-2017-05-24 12:57:33,636 Reading Data
-2017-05-24 12:57:40,154 Data read, running transforms
-2017-05-24 12:57:40,154 Transforms complete
-2017-05-24 12:57:40,154 Writing frame as csv to path : /home/fractaluser/Documents/Litigation_Data/Output/
-2017-05-24 12:57:50,064 File write done
-2017-05-24 12:57:50,065 Running complete without problems
+2017-05-28 20:42:39,353 Setting up spark context
+2017-05-28 20:42:39,353 Setting spark config param: spark.dynamicAllocation.maxExecutors to 10
+2017-05-28 20:42:39,353 Setting spark config param: spark.dynamicAllocation.enabled to True
+2017-05-28 20:42:39,353 Setting spark config param: spark.dynamicAllocation.executorIdleTimeout to 240
+2017-05-28 20:42:39,353 Setting spark config param: spark.dynamicAllocation.minExecutors to 2
+2017-05-28 20:42:39,353 Setting spark config param: spark.executorEnv.VARFILE to /home/fractaluser/AutomatedModeling/code/utils/../variables.json
+2017-05-28 20:42:39,354 Setting spark config param: spark.dynamicAllocation.initialExecutors to 2
+2017-05-28 20:42:39,354 Setting spark config param: spark.executor.memory to 2g
+2017-05-28 20:42:42,122 SparkSession created
+2017-05-28 20:42:42,122 Log statement of etl_driver
+2017-05-28 20:42:42,122 Running the framework
+2017-05-28 20:42:42,123 Reading Data
+2017-05-28 20:42:46,316 Data read, running transforms
+2017-05-28 20:42:46,316 Starting mode: add_variables
+2017-05-28 20:42:46,316 Module name: transforms.transform_1, Transformation Function: call_funcs
+2017-05-28 20:42:48,733 Error encountered: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.runJob.
+: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 1.0 failed 1 times, most recent failure: Lost task 0.0 in stage 1.0 (TID 1, localhost, executor driver): org.apache.spark.api.python.PythonException: Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1484, in __getitem__
+    idx = self.__fields__.index(item)
+ValueError: 'POLICY_COVERAGE' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 174, in main
+    process()
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 169, in process
+    serializer.dump_stream(func(split_index, iterator), outfile)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/serializers.py", line 268, in dump_stream
+    vs = list(itertools.islice(iterator, batch))
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/rdd.py", line 1338, in takeUpToNumLeft
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 9, in call_funcs
+    row_dict = func(row_dict)
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 14, in add_null_column
+    row_dict['null_column'] = row_dict[vb.VarMap.policy_coverage]
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1489, in __getitem__
+    raise ValueError(item)
+ValueError: POLICY_COVERAGE
+
+	at org.apache.spark.api.python.PythonRunner$$anon$1.read(PythonRDD.scala:193)
+	at org.apache.spark.api.python.PythonRunner$$anon$1.<init>(PythonRDD.scala:234)
+	at org.apache.spark.api.python.PythonRunner.compute(PythonRDD.scala:152)
+	at org.apache.spark.api.python.PythonRDD.compute(PythonRDD.scala:63)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:287)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)
+	at org.apache.spark.scheduler.Task.run(Task.scala:99)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:322)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:748)
+
+Driver stacktrace:
+	at org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1435)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1423)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1422)
+	at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:48)
+	at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:1422)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:802)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:802)
+	at scala.Option.foreach(Option.scala:257)
+	at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:802)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1650)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1605)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1594)
+	at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:628)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:1925)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:1938)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:1951)
+	at org.apache.spark.api.python.PythonRDD$.runJob(PythonRDD.scala:441)
+	at org.apache.spark.api.python.PythonRDD.runJob(PythonRDD.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+	at py4j.Gateway.invoke(Gateway.java:280)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.GatewayConnection.run(GatewayConnection.java:214)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.spark.api.python.PythonException: Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1484, in __getitem__
+    idx = self.__fields__.index(item)
+ValueError: 'POLICY_COVERAGE' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 174, in main
+    process()
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 169, in process
+    serializer.dump_stream(func(split_index, iterator), outfile)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/serializers.py", line 268, in dump_stream
+    vs = list(itertools.islice(iterator, batch))
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/rdd.py", line 1338, in takeUpToNumLeft
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 9, in call_funcs
+    row_dict = func(row_dict)
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 14, in add_null_column
+    row_dict['null_column'] = row_dict[vb.VarMap.policy_coverage]
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1489, in __getitem__
+    raise ValueError(item)
+ValueError: POLICY_COVERAGE
+
+	at org.apache.spark.api.python.PythonRunner$$anon$1.read(PythonRDD.scala:193)
+	at org.apache.spark.api.python.PythonRunner$$anon$1.<init>(PythonRDD.scala:234)
+	at org.apache.spark.api.python.PythonRunner.compute(PythonRDD.scala:152)
+	at org.apache.spark.api.python.PythonRDD.compute(PythonRDD.scala:63)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:287)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)
+	at org.apache.spark.scheduler.Task.run(Task.scala:99)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:322)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	... 1 more
+
+2017-05-28 20:42:48,747 Traceback (most recent call last):
+  File "/home/fractaluser/AutomatedModeling/code/utils/etl_driver.py", line 61, in run
+    self.run_framework()
+  File "/home/fractaluser/AutomatedModeling/code/utils/etl_driver.py", line 74, in run_framework
+    frame = self.call_mode(frame, mode)
+  File "/home/fractaluser/AutomatedModeling/code/utils/etl_driver.py", line 98, in call_mode
+    frame = getattr(self,mode)(frame)
+  File "/home/fractaluser/AutomatedModeling/code/utils/etl_driver.py", line 115, in add_variables
+    samplingRatio = self.io_conf.sampling_ratio)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/session.py", line 524, in createDataFrame
+    rdd, schema = self._createFromRDD(data.map(prepare), schema, samplingRatio)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/session.py", line 364, in _createFromRDD
+    struct = self._inferSchema(rdd, samplingRatio)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/session.py", line 335, in _inferSchema
+    first = rdd.first()
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/rdd.py", line 1360, in first
+    rs = self.take(1)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/rdd.py", line 1342, in take
+    res = self.context.runJob(self, takeUpToNumLeft, p)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/context.py", line 968, in runJob
+    port = self._jvm.PythonRDD.runJob(self._jsc.sc(), mappedRDD._jrdd, partitions)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py", line 1133, in __call__
+    answer, self.gateway_client, self.target_id, self.name)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/utils.py", line 63, in deco
+    return f(*a, **kw)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py", line 319, in get_return_value
+    format(target_id, ".", name), value)
+py4j.protocol.Py4JJavaError: An error occurred while calling z:org.apache.spark.api.python.PythonRDD.runJob.
+: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 1.0 failed 1 times, most recent failure: Lost task 0.0 in stage 1.0 (TID 1, localhost, executor driver): org.apache.spark.api.python.PythonException: Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1484, in __getitem__
+    idx = self.__fields__.index(item)
+ValueError: 'POLICY_COVERAGE' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 174, in main
+    process()
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 169, in process
+    serializer.dump_stream(func(split_index, iterator), outfile)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/serializers.py", line 268, in dump_stream
+    vs = list(itertools.islice(iterator, batch))
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/rdd.py", line 1338, in takeUpToNumLeft
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 9, in call_funcs
+    row_dict = func(row_dict)
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 14, in add_null_column
+    row_dict['null_column'] = row_dict[vb.VarMap.policy_coverage]
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1489, in __getitem__
+    raise ValueError(item)
+ValueError: POLICY_COVERAGE
+
+	at org.apache.spark.api.python.PythonRunner$$anon$1.read(PythonRDD.scala:193)
+	at org.apache.spark.api.python.PythonRunner$$anon$1.<init>(PythonRDD.scala:234)
+	at org.apache.spark.api.python.PythonRunner.compute(PythonRDD.scala:152)
+	at org.apache.spark.api.python.PythonRDD.compute(PythonRDD.scala:63)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:287)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)
+	at org.apache.spark.scheduler.Task.run(Task.scala:99)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:322)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:748)
+
+Driver stacktrace:
+	at org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1435)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1423)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1422)
+	at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:48)
+	at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:1422)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:802)
+	at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:802)
+	at scala.Option.foreach(Option.scala:257)
+	at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:802)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1650)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1605)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1594)
+	at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)
+	at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:628)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:1925)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:1938)
+	at org.apache.spark.SparkContext.runJob(SparkContext.scala:1951)
+	at org.apache.spark.api.python.PythonRDD$.runJob(PythonRDD.scala:441)
+	at org.apache.spark.api.python.PythonRDD.runJob(PythonRDD.scala)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+	at py4j.Gateway.invoke(Gateway.java:280)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.GatewayConnection.run(GatewayConnection.java:214)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.spark.api.python.PythonException: Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1484, in __getitem__
+    idx = self.__fields__.index(item)
+ValueError: 'POLICY_COVERAGE' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 174, in main
+    process()
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/worker.py", line 169, in process
+    serializer.dump_stream(func(split_index, iterator), outfile)
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/serializers.py", line 268, in dump_stream
+    vs = list(itertools.islice(iterator, batch))
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/rdd.py", line 1338, in takeUpToNumLeft
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 9, in call_funcs
+    row_dict = func(row_dict)
+  File "/home/fractaluser/AutomatedModeling/code/transforms/transform_1.py", line 14, in add_null_column
+    row_dict['null_column'] = row_dict[vb.VarMap.policy_coverage]
+  File "/home/fractaluser/spark/spark-2.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/types.py", line 1489, in __getitem__
+    raise ValueError(item)
+ValueError: POLICY_COVERAGE
+
+	at org.apache.spark.api.python.PythonRunner$$anon$1.read(PythonRDD.scala:193)
+	at org.apache.spark.api.python.PythonRunner$$anon$1.<init>(PythonRDD.scala:234)
+	at org.apache.spark.api.python.PythonRunner.compute(PythonRDD.scala:152)
+	at org.apache.spark.api.python.PythonRDD.compute(PythonRDD.scala:63)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:287)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)
+	at org.apache.spark.scheduler.Task.run(Task.scala:99)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:322)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	... 1 more
+
+
+2017-05-28 20:42:48,747 
+

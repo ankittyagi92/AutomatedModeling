@@ -24,5 +24,7 @@
     "output_dir": "C:/Users/ankit_lr03y9t/Documents/Kaggle/Titanic/",
     "output_file": "modified.csv"
   },
-  "VaribleConfig":{}
+  "VariableConfig":{
+    "variable_file": "/code/variables.json"
+  }
 }
