@@ -1,14 +1,19 @@
 import utils.var_builder as vb
+import pyspark
 
-def call_funcs(row_dict):
+def call_funcs(row):
 
-    func_list = {add_null_column,
-                 #test_var_builder
+    row_dict = row.asDict()
+
+    func_list = {#add_null_column,
+                 test_var_builder
                  }
     for func in func_list:
         row_dict = func(row_dict)
 
-    return row_dict
+    row = pyspark.sql.Row(**row_dict)
+
+    return row
 
 def add_null_column(row_dict):
     row_dict['null_column'] = None

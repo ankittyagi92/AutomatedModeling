@@ -70,7 +70,7 @@ class ETLdriver(object):
         frame, header = self._load_data()
         self.log.info("Data read, running transforms")
         for mode in self.general_conf.mode:
-            print("Mode: ", mode)
+            self.log.info("Mode: ", mode)
             frame = self.call_mode(frame, mode)
         self.log.info("Transforms complete")
         if self.io_conf.save_frame:
@@ -83,7 +83,7 @@ class ETLdriver(object):
         extension = os.path.splitext(self.io_conf.input_file)[1]
 
         if extension == '.csv':
-            df = self.spark.read.csv(self.io_conf.input_dir + self.io_conf.input_file)
+            df = self.spark.read.csv(self.io_conf.input_dir + self.io_conf.input_file, header = True)
             head = list(df)
             return df, head
         elif(extension == '.parquet'):
@@ -94,6 +94,7 @@ class ETLdriver(object):
     def call_mode(self, frame, mode):
 
         self.log.info("Starting mode: %s" % mode )
+
         if hasattr(self, mode):
             frame = getattr(self,mode)(frame)
         else:
@@ -108,8 +109,10 @@ class ETLdriver(object):
             self.log.info("Module name: %s, Transformation Function: %s" % (module_name, transform_func))
 
             mod = importlib.import_module(module_name)
+
             if hasattr(mod, transform_func):
                 add_frame_rows = frame.rdd.map(getattr(mod, transform_func))
+
             if self.io_conf.sampling_ratio:
                 frame = self.spark.createDataFrame(add_frame_rows,
                                                    samplingRatio = self.io_conf.sampling_ratio)

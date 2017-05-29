@@ -18,8 +18,7 @@
       "add_variables"
     ],
     "variable_addition_dict":{
-      "transforms.transform_1": "call_funcs",
-      "transforms.transform_2": "add_random_column"
+      "transforms.transform_1": "call_funcs"
     }
   },
   "IOConfig":{
